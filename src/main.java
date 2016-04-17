@@ -9,16 +9,21 @@ public class main {
 
     public static void main(String[] args){
 
-        ArrayList<triangle> triangleRBVACases = generateTriangleRBVACases();
-
-        System.out.println("Robustness Boundary Value Analysis Tests:");
-        
-        for (triangle t : triangleRBVACases){
-            t.run();
-        }
-
+        runTriangleTest("Triangle Worst Case", generateTriangleWCCases());
+        runTriangleTest("Robust Boundary Value Analysis", generateTriangleRBVACases());
 
     }
+
+
+
+    public static void runTriangleTest(String testName, ArrayList<triangle> testList){
+        System.out.println("Running Test: " + testName);
+
+        for (triangle t : testList){
+            t.run();
+        }
+    }
+
 
     public static ArrayList<triangle> generateTriangleRBVACases(){
 
@@ -48,6 +53,22 @@ public class main {
 
     public static ArrayList<triangle> generateTriangleWCCases(){
 
+        int nominalValue = (5 + 205) / 2;
+
+        int[] testCases = getBVACases(5, 205);
+
+        ArrayList<triangle> list = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                for (int k = 0; k < 5; k++){
+                    triangle t = new triangle(testCases[i], testCases[j], testCases[k]);
+                    list.add(t);
+                }
+            }
+        }
+
+        return list;
     }
 
     public static int[] getBVACases(int min, int max){
